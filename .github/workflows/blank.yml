@@ -36,4 +36,4 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         ACCOUNTS_AND_PASSWORDS: ${{ secrets.ACCOUNTS_AND_PASSWORDS }}
       run: |
-        python main.py
+        python steps.py
