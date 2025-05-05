@@ -31,13 +31,20 @@ def modify_steps(account, password, min_steps, max_steps, attempts=3, timeout=20
             response = requests.get(url, timeout=timeout)
             result = response.json()
             if result.get('status') == 'success':
+                message = (
+                    f"<b>Steps_modifier</b>\n\n"
+                    f"✅ 账号：{account[:3]}***{account[-3:]}\n"
+                    f"已成功修改步数：{steps}"
+                )
+                send_telegram_message(message)
                 return f"账号 {account[:3]}***{account[-3:]} 修改成功，步数：{steps}"
         except requests.exceptions.RequestException as e:
             print(f"请求失败：{e}")
         
-        # 失败三次后发送通知
         if _ == attempts - 1:
-            send_telegram_message(f"<b>Steps_modifier</b>\n\n账号：{account}\n连续失败 {attempts} 次")
+            send_telegram_message(
+                f"<b>Steps_modifier</b>\n\n❌ 账号：{account}\n连续失败 {attempts} 次"
+            )
 
     return f"账号 {account[:3]}***{account[-3:]} 修改失败"
 
